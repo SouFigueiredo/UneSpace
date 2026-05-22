@@ -13,6 +13,7 @@ $sala_id      = $_POST['sala_id'];
 $turma_id     = $_POST['turma_id'];
 $dataReserva  = $_POST['data_reserva'];
 $periodo_id   = $_POST['periodo_id'];
+$horario_id = $_POST['horario_id'];
 
 $stmtUser = $conn->prepare("
     SELECT id
@@ -39,14 +40,14 @@ $check = $conn->prepare("
 
     WHERE sala_id = ?
     AND data_reserva = ?
-    AND periodo_id = ?
+    AND horario_id = ?
 ");
 
 $check->bind_param(
     "isi",
     $sala_id,
     $dataReserva,
-    $periodo_id
+    $horario_id
 );
 
 $check->execute();
@@ -73,18 +74,20 @@ $stmt = $conn->prepare("
         usuario_id,
         data_reserva,
         periodo_id,
+        horario_id,
         status
 
-    ) VALUES (?, ?, ?, ?, ?, 'Reservado')
+    ) VALUES (?, ?, ?, ?, ?, ?, 'Reservado')
 ");
 
 $stmt->bind_param(
-    "iiisi",
+    "iiisii",
     $sala_id,
     $turma_id,
     $usuario_id,
     $dataReserva,
-    $periodo_id
+    $periodo_id,
+    $horario_id
 );
 
 if ($stmt->execute()) {

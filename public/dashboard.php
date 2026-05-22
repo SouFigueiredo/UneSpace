@@ -13,13 +13,20 @@ $sql = "
     SELECT
         salas.*,
 
-        reservas.id AS reserva_id
+        reservas.id AS reserva_id,
+        reservas.horario_id,
+
+        horarios.horario_inicio,
+        horarios.horario_fim
 
     FROM salas
 
     LEFT JOIN reservas
     ON reservas.sala_id = salas.id
     AND reservas.data_reserva = CURDATE()
+
+    LEFT JOIN horarios
+    ON horarios.id = reservas.horario_id
 
     WHERE salas.bloco = 'B'
 
@@ -31,7 +38,28 @@ $result = $conn->query($sql);
 $salas = [];
 
 while ($row = $result->fetch_assoc()) {
-    $salas[$row['andar']][] = $row;
+    $andar = $row['andar'];
+    $salaId = $row['id'];
+
+    if (!isset($salas[$andar][$salaId])) {
+
+        $salas[$andar][$salaId] = [
+            'id' => $row['id'],
+            'nome' => $row['nome'],
+            'capacidade' => $row['capacidade'],
+            'bloco' => $row['bloco'],
+            'reservas' => []
+        ];
+    }
+
+    if (!empty($row['reserva_id'])) {
+
+        $salas[$andar][$salaId]['reservas'][] = [
+            'horario_id' => $row['horario_id'],
+            'inicio' => $row['horario_inicio'],
+            'fim' => $row['horario_fim']
+        ];
+    }
 }
 
 $turmasResult = $conn->query("SELECT * FROM turmas ORDER BY nome");
@@ -62,9 +90,10 @@ while ($row = $periodosResult->fetch_assoc()) {
 
 </head>
 
-<?php require_once 'components/modalReserva.php'; ?>
+
 
 <body class="bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white min-h-screen overflow-y-auto">
+    <?php require_once 'components/modalReserva.php'; ?>    
     <div class="max-w-7xl mx-auto px-6 py-10">
         <header class="
             relative
@@ -146,7 +175,7 @@ while ($row = $periodosResult->fetch_assoc()) {
                 ">
                     <?php foreach ($listaSalas as $sala): ?>
                         <?php
-                        $reservada = !empty($sala['reserva_id']);
+                        $reservada = count($sala['reservas']) >= 3;
 
                         $cardClasses = $reservada
                             ? 'border-red-500/40 bg-red-500/10 hover:border-red-400'
