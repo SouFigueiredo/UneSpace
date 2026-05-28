@@ -1,7 +1,6 @@
 
 
 async function abrirModal(id, nome) {
-    console.log("JS carregado");
     document
         .getElementById('modalReserva')
         .classList
@@ -31,11 +30,8 @@ async function carregarReservasSala(salaId) {
     const response = await fetch(
     `../api/reservas/listarSala.php?sala_id=${salaId}`
 );
-    const texto = await response.text();
 
-console.log(texto);
-
-const reservas = JSON.parse(texto);
+    const reservas = await response.json();
 
     const lista = document.getElementById('listaReservas');
 
@@ -56,30 +52,71 @@ const reservas = JSON.parse(texto);
 
         lista.innerHTML += `
     <div class="
-        bg-slate-800
+        bg-gradient-to-br
+        from-slate-800
+        to-slate-900
         border
         border-slate-700
-        rounded-xl
-        px-4
-        py-3
-        min-w-[180px]
-        flex-1
+        rounded-2xl
+        p-4
+        min-w-[220px]
+        shadow-lg
+        shadow-black/20
+        hover:border-blue-500/40
+        transition-all
     ">
 
-        <div class="font-semibold text-blue-300 text-sm mb-1">
-            ${reserva.data_reserva}
+        <div class="flex items-center justify-between mb-3">
+
+            <span class="
+                bg-blue-500/15
+                text-blue-300
+                text-xs
+                font-semibold
+                px-3
+                py-1
+                rounded-full
+                border
+                border-blue-500/20
+            ">
+                ${reserva.data_reserva}
+            </span>
+
+            <span class="
+                text-[11px]
+                text-slate-400
+            ">
+                ${reserva.periodo}
+            </span>
+
         </div>
 
-        <div class="text-white text-sm">
-            ${reserva.horario_inicio} - ${reserva.horario_fim}
+        <div class="
+            bg-slate-950/60
+            border
+            border-slate-700
+            rounded-xl
+            px-3
+            py-2
+            mb-3
+        ">
+            <p class="text-xs text-slate-400 mb-1">
+                Horário
+            </p>
+
+            <p class="text-sm font-semibold text-white">
+                ${reserva.horario_inicio} - ${reserva.horario_fim}
+            </p>
         </div>
 
-        <div class="text-slate-300 text-xs mt-2">
-            ${reserva.turma}
-        </div>
+        <div>
+            <p class="text-xs text-slate-400 mb-1">
+                Turma
+            </p>
 
-        <div class="text-slate-500 text-xs">
-            ${reserva.periodo}
+            <p class="text-sm text-slate-200 font-medium">
+                ${reserva.turma}
+            </p>
         </div>
 
     </div>

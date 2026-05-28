@@ -1,51 +1,87 @@
-# 📚 UneSpace — Gestão Inteligente de Salas
+# 📚 UneSpace — Sistema Inteligente de Gestão de Salas
 
-Sistema web desenvolvido com foco em **gestão, visualização e agendamento de salas acadêmicas**, buscando facilitar a organização de ambientes dentro da faculdade de forma simples, rápida e eficiente.
-
----
-
-## 🚀 Objetivo do Projeto
-
-O projeto tem como proposta central oferecer uma plataforma onde seja possível:
-
-- ✅ Visualizar salas disponíveis
-- ✅ Verificar horários ocupados
-- ✅ Realizar agendamentos
-- ✅ Gerenciar reservas
-- ✅ Controlar acessos administrativos
-- ✅ Organizar melhor os ambientes acadêmicos
-
-A ideia é transformar o processo de reserva de salas, que muitas vezes é manual e desorganizado, em algo digital e intuitivo.
+Sistema web desenvolvido para gerenciamento e agendamento de salas acadêmicas, oferecendo controle de disponibilidade, reservas em tempo real e organização inteligente dos ambientes universitários.
 
 ---
 
-# 🌐 Acesso ao Projeto
+# 🚀 Objetivo do Projeto
 
-### 🔗 Deploy
+O UneSpace foi criado com o objetivo de digitalizar e simplificar o processo de reserva de salas dentro do ambiente acadêmico.
 
-https://soufigueiredo.github.io/extensionproject/index.html
+O sistema permite:
+
+* ✅ Visualização de salas disponíveis
+* ✅ Controle de horários ocupados
+* ✅ Agendamento inteligente de salas
+* ✅ Bloqueio automático de conflitos
+* ✅ Controle de reservas por período
+* ✅ Visualização de agendamentos em tempo real
+* ✅ Exclusão automática de reservas expiradas
+* ✅ Interface moderna e responsiva
 
 ---
 
-# 🛠️ Tecnologias Utilizadas
+# 🌐 Tecnologias Utilizadas
 
-- HTML5
-- CSS3
-- Tailwind
-- JavaScript
-- PHP
-- MySQL
+* HTML5
+* TailwindCSS
+* JavaScript
+* PHP
+* MySQL
+* XAMPP
 
 ---
 
 # 🔐 Sistema de Autenticação
 
-O sistema atualmente possui autenticação administrativa utilizando:
+O sistema possui autenticação administrativa utilizando:
 
-- Sessões (`$_SESSION`)
-- `password_hash()`
-- `password_verify()`
-- API REST em PHP
+* `$_SESSION`
+* `password_hash()`
+* `password_verify()`
+* Proteção de rotas privadas
+
+---
+
+# 🧠 Funcionalidades Implementadas
+
+## ✅ Reservas Inteligentes
+
+* Não permite reservar horários já ocupados
+* Bloqueia horários automaticamente
+* Atualização dinâmica via JavaScript
+
+---
+
+## ✅ Controle de Datas
+
+O sistema:
+
+* bloqueia reservas em datas passadas
+* remove automaticamente reservas expiradas
+* controla disponibilidade em tempo real
+
+---
+
+## ✅ Dashboard Dinâmico
+
+* Visualização das salas por andar
+* Status visual:
+
+  * Disponível
+  * Reservada
+* Cards modernos com TailwindCSS
+
+---
+
+## ✅ Modal de Reservas
+
+Ao clicar em uma sala:
+
+* exibe formulário de reserva
+* mostra agendamentos já existentes
+* exibe horários ocupados
+* impede conflitos automaticamente
 
 ---
 
@@ -59,28 +95,65 @@ gestaosala
 
 ---
 
-# 🔑 Geração de Hash
+# ⚙️ Como Executar o Projeto
 
-O arquivo:
+## 1️⃣ Clone o repositório
 
-```txt
-gerarhash.php
+```bash
+git clone https://github.com/souFigueiredo/UneSpace.git
 ```
-
-é utilizado apenas para gerar hashes de senha criptografadas com:
-
-```php
-password_hash()
-```
-
-Isso permite cadastrar usuários diretamente no MySQL de forma segura.
 
 ---
 
-# 📂 Estrutura Inicial do Projeto
+## 2️⃣ Mova para o XAMPP
+
+Coloque a pasta do projeto em:
 
 ```txt
-extensionproject/
+htdocs/
+```
+
+---
+
+## 3️⃣ Inicie o Apache e MySQL
+
+Utilize o painel do XAMPP.
+
+---
+
+## 4️⃣ Execute o setup.sql
+
+Importe o arquivo:
+
+```txt
+setup.sql
+```
+
+no phpMyAdmin.
+
+---
+
+## 5️⃣ Acesse o sistema
+
+```txt
+http://localhost/extensionproject/public/index.html
+```
+
+---
+
+# 👤 Usuário Padrão
+
+```txt
+Usuário: admin
+Senha: admin
+```
+
+---
+
+# 📂 Estrutura do Projeto
+
+```txt
+PROJETO-EXTENSAO/
 │
 ├── api/
 │   ├── auth/
@@ -90,74 +163,61 @@ extensionproject/
 │   ├── config/
 │   │   └── connect.php
 │   │
-│   ├── reservas/
-│   │   ├── cancelar.php
-│   │   ├── criar.php
-│   │   └── listar.php
-│   │
-│   └── salas/
+│   └── reservas/
+│       ├── cancelar.php
 │       ├── criar.php
-│       ├── deletar.php
-│       ├── editar.php
-│       └── listar.php
+│       ├── listar.php
+│       └── listarSala.php
 │
 ├── public/
+│   ├── components/
+│   │   └── modalReserva.php
+│   │
+│   ├── img/
+│   │   └── unesc.webp
+│   │
 │   ├── js/
-│   ├── index.html
-│   └── style.css
+│   │   └── modalReserva.js
+│   │
+│   ├── dashboard.php
+│   └── index.html
 │
-└── README.md
+├── README.md
+└── setup.sql
 ```
 
 ---
 
-# 🎯 Funcionalidades Implementadas + Planejamentos
+# 🎯 Próximas Funcionalidades
 
-- [x] Tela de login
-- [x] Autenticação segura
-- [x] Integração com MySQL
-- [ ] Dashboard administrativo
-- [ ] Cadastro de salas
-- [x] Sistema de agendamento
-- [x] Controle de disponibilidade
-- [ ] Diferentes níveis de usuário
-- [ ] Histórico de reservas
-- [ ] API REST completa
-- [ ] Interface responsiva
+* [ ] CRUD administrativo
+* [ ] Diferentes níveis de usuário
+* [ ] Histórico de reservas
+* [ ] Dashboard analítico
+* [ ] Filtros avançados
+* [ ] API REST completa
+* [ ] Notificações de reservas
+* [ ] Responsividade mobile aprimorada
 
 ---
 
-# 💡 Visão do Projeto
+# 💡 Aprendizados no Projeto
 
-O UneSpace busca unir:
+Durante o desenvolvimento foram praticados conceitos de:
 
-- organização acadêmica
-- praticidade
-- automação
-- experiência do usuário
-
-Tudo isso em uma aplicação web moderna voltada ao ambiente universitário.
-
----
-
-# 👨‍💻 Desenvolvimento
-
-Projeto desenvolvido para fins acadêmicos e aprendizado prático de:
-
-- desenvolvimento web
-- APIs REST
-- autenticação
-- integração frontend/backend
-- modelagem de banco de dados
+* autenticação segura
+* APIs em PHP
+* integração frontend/backend
+* manipulação de DOM
+* consumo de APIs com Fetch
+* modelagem relacional
+* sessões em PHP
+* validações de disponibilidade
+* TailwindCSS
+* organização de projeto fullstack
 
 ---
 
-# 📌 Observações
-
-Atualmente o projeto está em fase inicial de desenvolvimento, com foco na construção da base estrutural do sistema e implementação das funcionalidades principais.
-
----
-
-# ⭐ UneSpace - Conectando salas da UNESC !
+# ⭐ UneSpace
 
 > “Organizando espaços, facilitando conexões.”

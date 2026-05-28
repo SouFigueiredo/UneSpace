@@ -15,6 +15,45 @@ $dataReserva  = $_POST['data_reserva'];
 $periodo_id   = $_POST['periodo_id'];
 $horario_id = $_POST['horario_id'];
 
+date_default_timezone_set('America/Sao_Paulo');
+
+$dataAtual = date('Y-m-d');
+$horaAtual = date('H:i:s');
+
+$horarios = [
+    1 => '18:50:00',
+    2 => '19:30:00',
+    3 => '20:40:00'
+];
+
+if ($dataReserva < $dataAtual) {
+
+    echo "
+        <script>
+            alert('Não é possível reservar datas passadas.');
+            window.location.href='../../public/dashboard.php';
+        </script>
+    ";
+
+    exit;
+}
+
+if (
+    $dataReserva == $dataAtual &&
+    isset($horarios[$horario_id]) &&
+    $horarios[$horario_id] <= $horaAtual
+) {
+
+    echo "
+        <script>
+            alert('Esse horário já passou.');
+            window.location.href='../../public/dashboard.php';
+        </script>
+    ";
+
+    exit;
+}
+
 $stmtUser = $conn->prepare("
     SELECT id
     FROM usuarios

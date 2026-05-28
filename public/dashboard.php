@@ -8,6 +8,7 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 require_once '../api/config/connect.php';
+date_default_timezone_set('America/Sao_Paulo'); $horaAtual = date('H:i:s'); $conn->query(" DELETE reservas FROM reservas INNER JOIN horarios ON horarios.id = reservas.horario_id WHERE reservas.data_reserva < CURDATE() OR ( reservas.data_reserva = CURDATE() AND horarios.horario_fim < '$horaAtual' ) ");
 
 $sql = "
     SELECT
@@ -264,7 +265,11 @@ while ($row = $periodosResult->fetch_assoc()) {
                                 </div>
 
                                 <button 
-                                onclick="abrirModal(<?php echo $sala['id']; ?>, '<?php echo $sala['nome']; ?>')"
+                                onclick='abrirModal(
+                                    <?php echo $sala["id"]; ?>,
+                                    <?php echo json_encode($sala["nome"]); ?>
+                                )'
+
                                 class="
                                 mt-7
                                 w-full

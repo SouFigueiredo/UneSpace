@@ -2,86 +2,149 @@ CREATE DATABASE IF NOT EXISTS gestaosala;
 
 USE gestaosala;
 
+-- =========================
+-- USUÁRIOS
+-- =========================
+
 CREATE TABLE usuarios (
 
-    id INT AUTO_INCREMENT PRIMARY KEY,
+```
+id INT AUTO_INCREMENT PRIMARY KEY,
 
-    usuario VARCHAR(100) NOT NULL UNIQUE,
+usuario VARCHAR(100) NOT NULL UNIQUE,
 
-    senha VARCHAR(255) NOT NULL
+senha VARCHAR(255) NOT NULL
+```
+
 );
+
+-- =========================
+-- SALAS
+-- =========================
 
 CREATE TABLE salas (
 
-    id INT AUTO_INCREMENT PRIMARY KEY,
+```
+id INT AUTO_INCREMENT PRIMARY KEY,
 
-    nome VARCHAR(50) NOT NULL,
+nome VARCHAR(50) NOT NULL,
 
-    bloco VARCHAR(10) NOT NULL,
+bloco VARCHAR(10) NOT NULL,
 
-    andar INT NOT NULL,
+andar INT NOT NULL,
 
-    capacidade INT,
+capacidade INT,
 
-    status VARCHAR(20) DEFAULT 'Disponível'
+status VARCHAR(20) DEFAULT 'Disponível'
+```
+
 );
+
+-- =========================
+-- TURMAS
+-- =========================
 
 CREATE TABLE turmas (
 
-    id INT AUTO_INCREMENT PRIMARY KEY,
+```
+id INT AUTO_INCREMENT PRIMARY KEY,
 
-    nome VARCHAR(100) NOT NULL,
+nome VARCHAR(100) NOT NULL,
 
-    curso VARCHAR(100),
+curso VARCHAR(100),
 
-    periodo VARCHAR(20)
+periodo VARCHAR(20)
+```
+
 );
+
+-- =========================
+-- HORÁRIOS
+-- =========================
+
+CREATE TABLE horarios (
+
+```
+id INT AUTO_INCREMENT PRIMARY KEY,
+
+horario_inicio TIME NOT NULL,
+
+horario_fim TIME NOT NULL
+```
+
+);
+
+-- =========================
+-- PERÍODOS
+-- =========================
 
 CREATE TABLE periodos (
 
-    id INT AUTO_INCREMENT PRIMARY KEY,
+```
+id INT AUTO_INCREMENT PRIMARY KEY,
 
-    nome VARCHAR(50),
+nome VARCHAR(50)
+```
 
-    horario_inicio TIME,
-
-    horario_fim TIME
 );
+
+-- =========================
+-- RESERVAS
+-- =========================
 
 CREATE TABLE reservas (
 
-    id INT AUTO_INCREMENT PRIMARY KEY,
+```
+id INT AUTO_INCREMENT PRIMARY KEY,
 
-    sala_id INT NOT NULL,
+sala_id INT NOT NULL,
 
-    turma_id INT NOT NULL,
+turma_id INT NOT NULL,
 
-    usuario_id INT NOT NULL,
+usuario_id INT NOT NULL,
 
-    data_reserva DATE NOT NULL,
+data_reserva DATE NOT NULL,
 
-    periodo_id INT NOT NULL,
+periodo_id INT NOT NULL,
 
-    status VARCHAR(20) DEFAULT 'Reservado',
+horario_id INT NOT NULL,
 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+status VARCHAR(20) DEFAULT 'Reservado',
 
-    FOREIGN KEY (sala_id) REFERENCES salas(id),
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    FOREIGN KEY (turma_id) REFERENCES turmas(id),
+FOREIGN KEY (sala_id) REFERENCES salas(id),
 
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+FOREIGN KEY (turma_id) REFERENCES turmas(id),
 
-    FOREIGN KEY (periodo_id) REFERENCES periodos(id)
+FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+
+FOREIGN KEY (periodo_id) REFERENCES periodos(id),
+
+FOREIGN KEY (horario_id) REFERENCES horarios(id)
+```
+
 );
+
+-- =========================
+-- USUÁRIO PADRÃO
+-- senha: admin
+-- =========================
 
 INSERT INTO usuarios (usuario, senha) VALUES
 
 (
-    'admin',
+'admin',
 
-    '$2y$10$7yDVcF87aJHvSNEcstvVouzVfUK/8fSYFUjOl2zWCA1k508cpzApS'
+```
+'$2y$10$7yDVcF87aJHvSNEcstvVouzVfUK/8fSYFUjOl2zWCA1k508cpzApS'
+```
+
 );
+
+-- =========================
+-- SALAS
+-- =========================
 
 INSERT INTO salas (nome, bloco, andar, capacidade) VALUES
 
@@ -97,15 +160,34 @@ INSERT INTO salas (nome, bloco, andar, capacidade) VALUES
 ('B302', 'B', 3, 35),
 ('B303', 'B', 3, 50);
 
+-- =========================
+-- TURMAS
+-- =========================
+
 INSERT INTO turmas (nome, curso, periodo) VALUES
 
-('ADS 1', 'Análise e Desenvolvimento de Sistemas', 'Noturno'),
-('ADS 2', 'Análise e Desenvolvimento de Sistemas', 'Noturno'),
-('ENG 1', 'Engenharia', 'Matutino');
+('SI 1', 'Sistemas de Informação', 'Noturno'),
+('CC 1', 'Ciências Contábeis', 'Noturno'),
+('ADM 1', 'Administração', 'Noturno'),
+('DIR 1', 'Direito', 'Noturno'),
+('PSI 1', 'Psicologia', 'Noturno');
 
-INSERT INTO periodos (nome, horario_inicio, horario_fim) VALUES
+-- =========================
+-- HORÁRIOS
+-- =========================
 
-('1° Período', '18:50:00', '19:40:00'),
-('2° Período', '19:40:00', '20:30:00'),
-('3° Período', '20:50:00', '21:40:00'),
-('4° Período', '21:40:00', '22:30:00');
+INSERT INTO horarios (horario_inicio, horario_fim) VALUES
+
+('18:50:00', '19:30:00'),
+('19:30:00', '20:30:00'),
+('20:40:00', '22:00:00');
+
+-- =========================
+-- PERÍODOS
+-- =========================
+
+INSERT INTO periodos (nome) VALUES
+
+('1° Período'),
+('2° Período'),
+('3° Período');

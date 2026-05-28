@@ -1,10 +1,7 @@
 <?php
 
-header('Content-Type: application/json');
 session_start();
 require_once '../config/connect.php';
-$data = json_decode(file_get_contents("php://input"), true);
-
 $usuario = $_POST['inUser'];
 $senha = $_POST['inPass'];
 

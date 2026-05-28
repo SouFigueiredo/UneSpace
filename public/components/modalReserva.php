@@ -3,8 +3,15 @@
     class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 overflow-y-auto p-6"
 >
 
-    <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 w-full max-w-md">
-
+    <div class="
+    bg-slate-900
+    border
+    border-slate-700
+    rounded-3xl
+    p-8
+    w-full
+    max-w-5xl
+">
         <div class="flex items-center justify-between mb-6">
 
             <h2 class="text-2xl font-bold">
@@ -91,6 +98,7 @@
 
                 <input
                     type="date"
+                    min="<?php echo date('Y-m-d'); ?>"
                     name="data_reserva"
                     id="data_reserva"
                     required
@@ -218,10 +226,11 @@
             <div
     id="listaReservas"
     class="
-        flex
-        flex-wrap
-        gap-3
-        max-h-64
+        grid
+        grid-cols-1
+        sm:grid-cols-2
+        gap-4
+        max-h-72
         overflow-y-auto
         pr-1
     "
